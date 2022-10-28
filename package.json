@@ -1,0 +1,10 @@
+{
+  "name": "test-server",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "deploy": "bash scripts/deploy.sh"
+  },
+  "author": "",
+  "license": "ISC"
+}

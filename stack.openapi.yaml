@@ -1,0 +1,44 @@
+openapi: 3.0.0
+info:
+  version: 0.0.1
+  title: Test Server
+  description: Test Server
+servers:
+  - url: https://apis.nuelma.dev/test-server
+    description: Test server
+paths:
+  /:
+    get:
+      x-amazon-apigateway-integration:
+        $ref: '#/components/x-amazon-apigateway-integrations/httpEndpoints'
+      security:
+        - apiAuthorizer: []
+x-amazon-apigateway-cors:
+  allowOrigins:
+  - http://localhost:3000
+  - http://localhost:4000
+  - https://content.nuelmadev.com
+  - http://localhost:4200
+  allowCredentials: true
+  exposeHeaders:
+  - "*"
+  maxAge: 3600
+  allowMethods:
+  - GET
+  - OPTIONS
+  - POST
+  - PUT
+  - PATCH
+  - DELETE
+  allowHeaders:
+  - "*"
+
+components:
+  x-amazon-apigateway-integrations:
+    httpEndpoints:
+      type: AWS_PROXY
+      httpMethod: POST
+      uri:
+        Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${HttpEndpointsLambda.Arn}/invocations
+      passthroughBehaviour: "when_no_templates"
+      payloadFormatVersion: "2.0"
